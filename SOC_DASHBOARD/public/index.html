@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOC Digital Command Center</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="soc-container">
+        <header>
+            <div class="logo">🛡️ NEXUS<span>SOC</span></div>
+            <div class="status-indicator">
+                <div class="dot"></div>
+                LIVE MONITORING ACTIVE
+            </div>
+            <div id="target-info" style="font-size: 0.8rem; color: #8b949e;">
+                Target: localhost:3000
+            </div>
+        </header>
+
+        <main>
+            <div class="sidebar">
+                <div class="stats-card">
+                    <h3>INCIDENT SUMMARY</h3>
+                    <div class="stat-item">
+                        <span>Total Events</span>
+                        <span id="stat-total">0</span>
+                    </div>
+                    <div class="stat-item severity-critical">
+                        <span>Critical (SQLi/LFI)</span>
+                        <span id="stat-critical">0</span>
+                    </div>
+                    <div class="stat-item severity-high">
+                        <span>High (SSRF)</span>
+                        <span id="stat-high">0</span>
+                    </div>
+                    <div class="stat-item severity-info">
+                        <span>Informational</span>
+                        <span id="stat-info">0</span>
+                    </div>
+                </div>
+
+                <div class="stats-card">
+                    <h3>SYSTEM HEALTH</h3>
+                    <p style="font-size: 0.8rem; color: #8b949e;">All sensors reporting normal bandwidth. API Connection stable.</p>
+                </div>
+            </div>
+
+            <div class="event-feed">
+                <div class="feed-header">
+                    <h2>SECURITY EVENT LOGS</h2>
+                    <button onclick="clearLogs()" style="background: transparent; border: 1px solid #30363d; color: #8b949e; padding: 0.2rem 0.5rem; border-radius: 4px; cursor: pointer; font-size: 0.7rem;">Clear View</button>
+                </div>
+                <div class="feed-content" id="alert-feed">
+                    <!-- Alerts will be injected here -->
+                    <div style="text-align: center; color: #484f58; margin-top: 2rem;">Waiting for events...</div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

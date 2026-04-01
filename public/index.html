@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Simulasi Kerentanan - Lab Keamanan</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Vulnerability Lab Simulator</h1>
+        <p>Platform edukasi untuk simulasi serangan siber pada aplikasi web.</p>
+      </header>
+
+      <div class="dashboard">
+        <!-- SQL Injection -->
+        <div class="card">
+          <h2>🧪 SQL Injection</h2>
+          <p>
+            Coba inject query SQL untuk mendapatkan data admin tanpa password.
+          </p>
+          <div class="lab-form">
+            <input
+              type="text"
+              id="sqli-input"
+              placeholder="Cari username (misal: user1)"
+            />
+            <button onclick="runSQLi()">Cari User</button>
+            <div id="sqli-result" class="result-area"></div>
+          </div>
+        </div>
+
+        <!-- SSRF -->
+        <div class="card">
+          <h2>🌐 SSRF Lab</h2>
+          <p>
+            Paksa server untuk mengambil konten dari URL internal/eksternal.
+          </p>
+          <div class="lab-form">
+            <input
+              type="text"
+              id="ssrf-input"
+              placeholder="URL (misal: http://google.com)"
+            />
+            <button onclick="runSSRF()">Ambil Konten</button>
+            <div id="ssrf-result" class="result-area"></div>
+          </div>
+        </div>
+
+        <!-- Bruteforce -->
+        <div class="card">
+          <h2>🔓 Bruteforce Lab</h2>
+          <p>Halaman login ini tidak memiliki proteksi rate limiting.</p>
+          <div class="lab-form">
+            <input type="text" id="brute-user" placeholder="Username" />
+            <input type="password" id="brute-pass" placeholder="Password" />
+            <button onclick="runBrute()">Login</button>
+            <div id="brute-result" class="result-area"></div>
+          </div>
+        </div>
+
+        <!-- Stored XSS -->
+        <div class="card">
+          <h2>📝 Stored XSS</h2>
+          <p>
+            Pesan yang anda kirimkan akan disimpan langsung ke database dan
+            dirender oleh client.
+          </p>
+          <div class="lab-form">
+            <input type="text" id="xss-user" placeholder="Nama Anda" />
+            <textarea id="xss-content" placeholder="Pesan Anda"></textarea>
+            <button onclick="runXSS()">Kirim Pesan</button>
+            <div id="xss-messages" class="message-list"></div>
+          </div>
+        </div>
+
+        <!-- LFI / Directory Traversal -->
+        <div class="card">
+          <h2>📁 Directory Traversal</h2>
+          <p>Baca file sistem dengan memanipulasi parameter file.</p>
+          <div class="lab-form">
+            <input
+              type="text"
+              id="lfi-input"
+              placeholder="Nama file (misal: server.js)"
+            />
+            <button onclick="runLFI()">Baca File</button>
+            <div id="lfi-result" class="result-area"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
