@@ -63,7 +63,7 @@ Dashboard SOC (Security Operations Center) digunakan untuk memantau serangan sec
 ### Cara Menjalankan SOC:
 
 1. Pastikan server simulasi (Port 3000) sudah berjalan.
-2. Masuk ke folder `SOC_DASHBOARD` dan jalankan: `node server.js`
+2. Masuk ke folder `siem` dan jalankan: `node server.js`
 3. Buka browser di: `http://localhost:4000`
 
 ### Apa yang dilakukan SOC ini?
