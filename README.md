@@ -54,6 +54,22 @@ Projek ini adalah aplikasi web yang sengaja dibuat rentan untuk tujuan edukatif.
 - Masukkan `package.json` atau `server.js` ke dalam input "Baca File".
 - **Hasil:** Isi file sensitif akan ditampilkan di layar.
 
+### 6. IDOR & Access Control
+
+**Deskripsi:** Mengakses profil atau data pengguna lain secara tidak sah dengan menebak ID (Insecure Direct Object Reference).
+**Cara Retas:**
+
+- Masukkan ID `1` pada input "User ID" dan klik Akses Profil.
+- **Hasil:** Anda akan mendapatkan data profil beserta informasi rahasia milik akun Admin, meskipun Anda belum melakukan autentikasi sebagai Admin.
+
+### 7. Privilege Escalation (Mass Assignment)
+
+**Deskripsi:** Mengeksploitasi fungsi update data untuk menyisipkan properti objek secara paksa (Mass Assignment) dan mendapatkan hak akses yang lebih tinggi.
+**Cara Retas:**
+
+- Masukkan ID target (misalnya `2`) dan kirim payload JSON: `{"role": "admin", "bio": "Hacked!"}` pada kotak teks.
+- **Hasil:** Parameter `role` akan ikut tersimpan ke dalam database dan mengubah status user tersebut menjadi Admin.
+
 ---
 
 ## Monitoring Dashboard (SOC)

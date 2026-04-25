@@ -188,6 +188,11 @@ app.get('/api/events', (req, res) => {
     res.json(securityEvents);
 });
 
+app.delete('/api/events', (req, res) => {
+    securityEvents.length = 0; // Clear the array in memory
+    res.json({ success: true, message: 'Logs cleared' });
+});
+
 // Internal Endpoint for SSRF testing
 app.get('/api/admin-secret', (req, res) => {
     if (req.ip === '::1' || req.ip === '127.0.0.1' || req.ip.includes('127.0.0.1')) {
@@ -197,7 +202,44 @@ app.get('/api/admin-secret', (req, res) => {
     }
 });
 
+// 6. IDOR & Broken Access Control Lab
+app.get('/api/users/:id', (req, res) => {
+    const requestedId = parseInt(req.params.id);
+    const user = mockDB.users.find(u => u.id === requestedId);
+    
+    if (user) {
+        if (requestedId === 1) {
+            logSecurityEvent('IDOR / Unauthorized Access Attempt', 'HIGH', `Akses mencurigakan ke profil Admin (ID: 1)`, { requestedId });
+        } else {
+            logSecurityEvent('Profile Access', 'INFO', `User mengakses profil ID: ${requestedId}`, { requestedId });
+        }
+        
+        const { password, ...safeUser } = user;
+        res.json({ success: true, user: safeUser });
+    } else {
+        res.status(404).json({ success: false, message: 'User not found' });
+    }
+});
+
+// 7. Privilege Escalation (Mass Assignment) Lab
+app.put('/api/users/:id/update', (req, res) => {
+    const requestedId = parseInt(req.params.id);
+    const updateData = req.body;
+    const userIndex = mockDB.users.findIndex(u => u.id === requestedId);
+    
+    if (userIndex !== -1) {
+        if (updateData.role || updateData.isAdmin) {
+            logSecurityEvent('Privilege Escalation Attempt', 'CRITICAL', `Terdeteksi percobaan modifikasi role (Mass Assignment) pada ID: ${requestedId}`, { updateData });
+        }
+        
+        mockDB.users[userIndex] = { ...mockDB.users[userIndex], ...updateData };
+        res.json({ success: true, message: 'Profile updated successfully', user: mockDB.users[userIndex] });
+    } else {
+        res.status(404).json({ success: false, message: 'User not found' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
-    console.log(`Vulnerable labs: SQLi, SSRF, Bruteforce, XSS, LFI`);
+    console.log(`Vulnerable labs: SQLi, SSRF, Bruteforce, XSS, LFI, IDOR, Privilege Escalation`);
 });

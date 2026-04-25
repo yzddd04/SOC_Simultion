@@ -89,6 +89,37 @@
             <div id="lfi-result" class="result-area"></div>
           </div>
         </div>
+
+        <!-- IDOR -->
+        <div class="card">
+          <h2>🔑 IDOR & Access Control</h2>
+          <p>Akses profil pengguna lain dengan menebak ID (ID 1 adalah admin).</p>
+          <div class="lab-form">
+            <input
+              type="number"
+              id="idor-input"
+              placeholder="User ID (misal: 1 atau 2)"
+            />
+            <button onclick="runIDOR()">Akses Profil</button>
+            <div id="idor-result" class="result-area"></div>
+          </div>
+        </div>
+
+        <!-- Privilege Escalation -->
+        <div class="card">
+          <h2>🛡️ Privilege Escalation</h2>
+          <p>Mass Assignment: Sisipkan parameter sensitif (role: admin) saat update profil.</p>
+          <div class="lab-form">
+            <input
+              type="number"
+              id="priv-id"
+              placeholder="ID Target (misal: 2)"
+            />
+            <textarea id="priv-json" placeholder='{"role": "admin", "bio": "Hacked!"}'></textarea>
+            <button onclick="runPriv()">Update Profil</button>
+            <div id="priv-result" class="result-area"></div>
+          </div>
+        </div>
       </div>
     </div>
 

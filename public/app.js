@@ -67,4 +67,28 @@ async function runLFI() {
     document.getElementById('lfi-result').innerHTML = `<pre>${data.substring(0, 1000)}</pre>`;
 }
 
+async function runIDOR() {
+    const id = document.getElementById('idor-input').value;
+    const res = await fetch(`/api/users/${encodeURIComponent(id)}`);
+    const data = await res.json();
+    document.getElementById('idor-result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+}
+
+async function runPriv() {
+    const id = document.getElementById('priv-id').value;
+    const jsonStr = document.getElementById('priv-json').value;
+    try {
+        const bodyData = JSON.parse(jsonStr);
+        const res = await fetch(`/api/users/${encodeURIComponent(id)}/update`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(bodyData)
+        });
+        const data = await res.json();
+        document.getElementById('priv-result').innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
+    } catch (e) {
+        document.getElementById('priv-result').innerHTML = `<pre style="color:red">JSON Tidak Valid: ${e.message}</pre>`;
+    }
+}
+
 loadMessages();
